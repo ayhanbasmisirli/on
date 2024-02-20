@@ -117,14 +117,3 @@ export default function Page() {
     </>
   );
 }
-
-function SearchAudience({ e, setSearch }) {
-  return (
-    <Input
-      className="mb-5"
-      placeholder="Search"
-      onChange={(e) => setSearch(e.target.value)}
-      prefix={<MagnifyingGlassIcon className="h-6 w-6 text-[#bdbcbc]" />}
-    />
-  );
-}
