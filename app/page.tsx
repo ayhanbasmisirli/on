@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Table, Input, Select } from 'antd';
 import { selectionStatus, columns, selectionTags } from './utils/enums';
 import {
@@ -19,7 +19,6 @@ export default function Page() {
   }
 
   const [audience, setAudience] = useState<audience[]>([]);
-  const [filteredAudience, setFilteredAudience] = useState<audience[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<string>('');
   const [tags, setTags] = useState<string>('');
@@ -38,18 +37,12 @@ export default function Page() {
       });
   }, []);
 
-  useEffect(() => {
-    setFilteredAudience(
-      audience.filter(
-        (audienceFilterItem) =>
-          audienceFilterItem.name
-            .toLowerCase()
-            .includes(search.toLowerCase()) &&
-          audienceFilterItem.status
-            .toLowerCase()
-            .includes(status.toLowerCase()) &&
-          audienceFilterItem.tags[0].toLowerCase().includes(tags.toLowerCase()),
-      ),
+  const filteredAudienceTable = useMemo(() => {
+    return audience.filter(
+      (audienceItem) =>
+        audienceItem.name.toLowerCase().includes(search.toLowerCase()) &&
+        audienceItem.status.toLowerCase().includes(status.toLowerCase()) &&
+        audienceItem.tags[0].toLowerCase().includes(tags.toLowerCase()),
     );
   }, [audience, search, status, tags]);
 
@@ -112,7 +105,7 @@ export default function Page() {
       <div>
         <Table
           className="rounded-md border-2 border-gray-200"
-          dataSource={filteredAudience}
+          dataSource={filteredAudienceTable}
           columns={columns}
           loading={loading}
         />
