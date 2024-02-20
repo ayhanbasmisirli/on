@@ -8,6 +8,7 @@ import {
   PhotoIcon,
   BellIcon,
 } from '@heroicons/react/24/outline';
+import { fetchAudienceData } from './api';
 
 export default function Page() {
   interface audience {
@@ -26,13 +27,15 @@ export default function Page() {
 
   useEffect(() => {
     setLoading(true);
-    const audience = fetch(
-      process.env.NEXT_PUBLIC_API_ENDPOINT || 'DEFAULT_API_ENDPOINT',
-    ).then((res) => res.json());
-    audience.then((data) => {
-      setAudience(data);
-      setLoading(false);
-    });
+    fetchAudienceData()
+      .then((data) => {
+        setAudience(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching audience data:', error);
+        setLoading(false);
+      });
   }, []);
 
   useEffect(() => {
