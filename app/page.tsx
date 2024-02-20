@@ -80,7 +80,7 @@ export default function Page() {
         <Select
           className="mb-5 ml-2 w-1/6"
           placeholder="Select a status"
-          value={status}
+          value={status || undefined}
           onChange={(value: string) => {
             setStatus(value);
           }}
@@ -94,7 +94,7 @@ export default function Page() {
         <Select
           className="mb-5 ml-2 w-1/6"
           placeholder="Select a tags"
-          value={tags}
+          value={tags || undefined}
           onChange={(value: string) => {
             setTags(value);
           }}

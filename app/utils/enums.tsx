@@ -34,7 +34,7 @@ const columns = [
   },
 ];
 
-const selectionStatus = ['active', 'passive'];
-const selectionTags = ['Development', 'Marketing', 'Design'];
+const selectionStatus = ['', 'active', 'passive'];
+const selectionTags = ['', 'Development', 'Marketing', 'Design'];
 
 export { columns, selectionStatus, selectionTags };
