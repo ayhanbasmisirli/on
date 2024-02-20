@@ -1,24 +1,28 @@
 'use client';
 import {
   UserGroupIcon,
-  HomeIcon,
-  DocumentDuplicateIcon,
+  Cog6ToothIcon,
+  Squares2X2Icon,
+  ClipboardDocumentIcon,
+  BoltIcon,
+  Square2StackIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
 const links = [
-  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon },
-  { name: 'Campaign', href: '/campaign', icon: DocumentDuplicateIcon },
+  { name: 'Dashboard', href: '/dashboard', icon: Squares2X2Icon },
+  { name: 'Campaign', href: '/campaign', icon: BoltIcon },
   { name: 'Audience', href: '/', icon: UserGroupIcon },
-  { name: 'Flows', href: '/flows', icon: HomeIcon },
-  { name: 'Content', href: '/content', icon: HomeIcon },
-  { name: 'Settings', href: '/settings ', icon: HomeIcon },
+  { name: 'Flows', href: '/flows', icon: Square2StackIcon },
+  { name: 'Content', href: '/content', icon: ClipboardDocumentIcon },
+  { name: 'Settings', href: '/settings ', icon: Cog6ToothIcon },
 ];
 
 export default function NavLinks() {
   const pathname = usePathname();
+
   return (
     <>
       {links.map((link) => {

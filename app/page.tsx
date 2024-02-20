@@ -54,7 +54,7 @@ export default function Page() {
     <>
       <div className="mb-10 flex gap-4">
         <div className="flex w-3/4 flex-col">
-          <p className="ml-2  w-3/4 font-extrabold">Welcome Amanda</p>
+          <p className="mb-4 ml-2  w-3/4 font-extrabold">Welcome Amanda</p>
           <p className="ml-2  w-3/4 text-xs font-extralight text-black/10">
             {new Date().toLocaleDateString('en-US', {
               weekday: 'short',
@@ -79,13 +79,13 @@ export default function Page() {
         />
         <Select
           className="mb-5 ml-2 w-1/6"
-          placeholder="Select a status"
-          value={status || undefined}
+          placeholder="Select Tags"
+          value={tags || undefined}
           onChange={(value: string) => {
-            setStatus(value);
+            setTags(value);
           }}
         >
-          {selectionStatus.map((status: string) => (
+          {selectionTags.map((status: string) => (
             <Select.Option key={status} value={status}>
               {status}
             </Select.Option>
@@ -93,13 +93,13 @@ export default function Page() {
         </Select>
         <Select
           className="mb-5 ml-2 w-1/6"
-          placeholder="Select a tags"
-          value={tags || undefined}
+          placeholder="All Status"
+          value={status || undefined}
           onChange={(value: string) => {
-            setTags(value);
+            setStatus(value);
           }}
         >
-          {selectionTags.map((status: string) => (
+          {selectionStatus.map((status: string) => (
             <Select.Option key={status} value={status}>
               {status}
             </Select.Option>
@@ -115,5 +115,16 @@ export default function Page() {
         />
       </div>
     </>
+  );
+}
+
+function SearchAudience({ e, setSearch }) {
+  return (
+    <Input
+      className="mb-5"
+      placeholder="Search"
+      onChange={(e) => setSearch(e.target.value)}
+      prefix={<MagnifyingGlassIcon className="h-6 w-6 text-[#bdbcbc]" />}
+    />
   );
 }
