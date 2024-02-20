@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { testdata } from './api/testdata';
 import { Table, Input, Select } from 'antd';
 import { selectionStatus, columns, selectionTags } from './utils/enums';
 import {
@@ -9,27 +8,48 @@ import {
   PhotoIcon,
   BellIcon,
 } from '@heroicons/react/24/outline';
+
 export default function Page() {
-  const [filteredAudience, setFilteredAudience] = useState<any[]>([]);
-  const [loading, setLoading] = useState<Boolean>(false);
+  interface audience {
+    id: number;
+    name: string;
+    tags: string[];
+    status: string;
+  }
+
+  const [audience, setAudience] = useState<audience[]>([]);
+  const [filteredAudience, setFilteredAudience] = useState<audience[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<string>('');
   const [tags, setTags] = useState<string>('');
   const [search, setSearch] = useState<string>('');
 
   useEffect(() => {
+    setLoading(true);
+    const audience = fetch(
+      process.env.NEXT_PUBLIC_API_ENDPOINT || 'DEFAULT_API_ENDPOINT',
+    ).then((res) => res.json());
+    audience.then((data) => {
+      setAudience(data);
+      setLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
     setFilteredAudience(
-      testdata.filter(
-        (audience) =>
-          audience.name.toLowerCase().includes(search.toLowerCase()) &&
-          audience.status.toLowerCase().includes(status.toLowerCase()) &&
-          audience.tags[0].toLowerCase().includes(tags.toLowerCase()),
+      audience.filter(
+        (audienceFilterItem) =>
+          audienceFilterItem.name
+            .toLowerCase()
+            .includes(search.toLowerCase()) &&
+          audienceFilterItem.status
+            .toLowerCase()
+            .includes(status.toLowerCase()) &&
+          audienceFilterItem.tags[0].toLowerCase().includes(tags.toLowerCase()),
       ),
     );
-  }, [search, status, tags]);
+  }, [audience, search, status, tags]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
   return (
     <>
       <div className="mb-10 flex gap-4">
@@ -91,6 +111,7 @@ export default function Page() {
           className="rounded-md border-2 border-gray-200"
           dataSource={filteredAudience}
           columns={columns}
+          loading={loading}
         />
       </div>
     </>
